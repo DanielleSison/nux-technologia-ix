@@ -2,6 +2,8 @@ const router = require("express").Router();
 const { Post } = require("../models/");
 const withAuth = require("../utils/auth");
 
+
+// Gets all the posts by the user when logged in
 router.get("/", withAuth, (req, res) => {
     Post.findAll({
         where: {
@@ -22,12 +24,14 @@ router.get("/", withAuth, (req, res) => {
         });
 });
 
+// Gets the route to create a new post
 router.get("/new", withAuth, (req, res) => {
     res.render("new-post", {
         layout: "dashboard"
     });
 });
 
+// Gets the route to edit the post
 router.get("/edit/:id", withAuth, (req, res) => {
     Post.findByPk(req.params.id)
         .then(dbPostData => {
